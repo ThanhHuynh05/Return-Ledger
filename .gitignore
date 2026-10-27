@@ -1,0 +1,92 @@
+# Dependencies
+node_modules/
+.pnp.*
+.yarn/*
+!.yarn/patches/
+!.yarn/plugins/
+!.yarn/releases/
+!.yarn/sdks/
+!.yarn/versions/
+
+# Application builds and generated output
+dist/
+build/
+out/
+.next/
+.nuxt/
+.output/
+.vite/
+.turbo/
+.nest/
+*.tsbuildinfo
+
+# Tests and coverage
+coverage/
+.nyc_output/
+playwright-report/
+playwright/.cache/
+test-results/
+
+# Logs and package-manager caches
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.npm/
+.pnpm-store/
+.eslintcache
+.stylelintcache
+.cache/
+
+# Local environment files and credentials
+.env
+.env.*
+!.env.example
+!.env.sample
+!.env.template
+!.env.*.example
+!.env.*.sample
+!.env.*.template
+.envrc
+.secrets/
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Local runtime data and temporary files (repository root only)
+/.local/
+/uploads/
+/storage/
+/tmp/
+/temp/
+/artifacts/
+
+# Local database files; SQL migrations remain tracked
+*.sqlite
+*.sqlite3
+*.db-journal
+
+# Editor-specific local state
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+*.swp
+*.swo
+*~
+
+# Operating-system files
+.DS_Store
+.AppleDouble
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Keep dependency lockfiles, Prisma schemas and migrations,
+# source documents, and synthetic CSV/test fixtures under version control.
+
