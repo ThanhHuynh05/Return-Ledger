@@ -4,7 +4,7 @@ A refund reconciliation and investigation platform for online merchants.
 
 ReturnLedger compares approved returns with recorded refunds, explains discrepancies, and preserves the history of investigation decisions.
 
-> **Project status:** Planning and repository setup. The application has not been scaffolded yet. Features and architecture below describe the intended implementation.
+> **Project status:** Foundation checkpoint A implemented. React connects to a NestJS health endpoint. Refund reconciliation, database integration, and identity remain planned.
 
 ## The problem
 
@@ -94,42 +94,65 @@ Planned acceptance examples:
 
 ## Repository layout
 
-The current repository contains this README and the Git ignore configuration.
-
-The intended layout after scaffolding is:
+Checkpoint A uses two applications with separate npm lockfiles:
 
 ```text
 Return-Ledger/
   apps/
-    web/              # React application
-    server/           # NestJS API, worker, and Prisma schema
-  packages/
-    contracts/        # Shared API contracts
-  tests/
-    e2e/              # Browser workflow tests
-    fixtures/         # Synthetic test records
-  infra/              # Deployment configuration
-  docs/               # Architecture and implementation guides
-  .github/
-    workflows/        # CI configuration
+    server/           # NestJS API and HTTP endpoint tests
+    web/              # React health connection page
   .gitignore
   README.md
 ```
 
+Database, worker, shared contracts, and deployment directories will be added in later checkpoints.
+
 ## Development setup
 
-There are currently no install, development, migration, or test scripts to run.
+Checkpoint A is implemented: the frontend displays the result of the API health endpoint.
 
-Before scaffolding, prepare:
+Use Node.js 24 LTS (tested with 24.11.0) and npm 11 (tested with 11.6.1).
+The repository uses the Node-compatible NestJS 11 scaffold.
+Each application has its own package.json and package-lock.json.
 
-- Git.
-- A compatible Node.js LTS release with npm.
-- PostgreSQL, installed locally or provided through Docker.
-- Stripe CLI for the later integration milestone.
+Run the following commands from the repository root.
 
-The first implementation checkpoint is a React page that displays the response from a NestJS health endpoint.
+**Terminal 1 - API:**
 
-Once the applications exist, this section will document exact commands for dependency installation, environment configuration, database migrations, seed data, local startup, and tests.
+```powershell
+Set-Location apps/server
+npm.cmd ci
+npm.cmd run start:dev
+```
+
+**Terminal 2 - frontend:**
+
+```powershell
+Set-Location apps/web
+npm.cmd ci
+npm.cmd run dev
+```
+
+Open http://localhost:5173. The page should display **API connected** and **returnledger-api: ok**.
+The API health response is available at http://localhost:3000/health.
+The API binds to loopback; CORS permits http://localhost:5173. Keep the default API port at 3000 for this checkpoint.
+The frontend port is fixed at 5173 and fails clearly if already occupied.
+
+To verify failure and recovery, stop the API and refresh the page. Restart the API and select **Try again**.
+Health checks process availability only; PostgreSQL and identity are later checkpoints.
+
+**Verification commands**, run from the repository root in a separate terminal:
+
+```powershell
+npm.cmd --prefix apps/server run build
+npm.cmd --prefix apps/server run lint
+npm.cmd --prefix apps/server test -- --runInBand
+npm.cmd --prefix apps/server run test:e2e -- --runInBand
+npm.cmd --prefix apps/web run build
+npm.cmd --prefix apps/web run lint
+```
+
+Use npm/npx normally outside PowerShell. The .cmd spelling avoids dependence on PowerShell script execution settings.
 
 ### Environment files
 
@@ -146,7 +169,7 @@ Dependency lockfiles, Prisma migrations, and synthetic fixtures should be commit
 
 ## Implementation roadmap
 
-- [ ] Scaffold the web application and API; connect the health endpoint.
+- [x] Scaffold the web application and API; connect the health endpoint.
 - [ ] Add the database schema, migrations, organization ownership, and sign-in.
 - [ ] Seed the four sample returns and implement reconciliation rules.
 - [ ] Build the investigation interface and audit history.
