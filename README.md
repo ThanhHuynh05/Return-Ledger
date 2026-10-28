@@ -167,6 +167,33 @@ When configuration is introduced:
 
 Dependency lockfiles, Prisma migrations, and synthetic fixtures should be committed.
 
+## Complete project milestones
+
+Use the [complete milestone roadmap](docs/milestones/README.md) for the whole project, broken into smaller checkpoints and numbered implementation steps:
+
+1. [Foundation](docs/milestones/01-foundation.md)
+2. [Reconciliation](docs/milestones/02-reconciliation.md)
+3. [Investigation](docs/milestones/03-investigation.md)
+4. [CSV imports](docs/milestones/04-csv-imports.md)
+5. [Stripe processing](docs/milestones/05-stripe-processing.md)
+6. [Hosted demonstration](docs/milestones/06-hosted-demonstration.md)
+7. [Production hardening](docs/milestones/07-production-hardening.md)
+
+Foundation is in progress: application connectivity is implemented. The remaining foundation work and milestones 2-7 are planned.
+
+## Foundation walkthrough
+
+Follow the [foundation checkpoint guides](docs/foundation/README.md) for small steps, commands, expected results, and acceptance checklists:
+
+| Checkpoint | Guide | Status |
+| --- | --- | --- |
+| A | [Connect the applications](docs/foundation/checkpoint-a-connect-applications.md) | Implemented |
+| B | [Add persistence](docs/foundation/checkpoint-b-add-persistence.md) | Planned |
+| C | [Add identity and permissions](docs/foundation/checkpoint-c-add-identity.md) | Planned |
+| D | [Make setup repeatable](docs/foundation/checkpoint-d-repeatable-setup.md) | Planned |
+
+The planned guides describe future changes; creating the documentation does not implement B, C, or D.
+
 ## Implementation roadmap
 
 - [x] Scaffold the web application and API; connect the health endpoint.

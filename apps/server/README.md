@@ -23,10 +23,19 @@ Health currently indicates that the API process responds; it does not check a da
 
 CORS permits the local frontend origin http://localhost:5173.
 
+## TypeScript and dependency configuration
+
+The editor and test configuration explicitly includes Node and Jest types. The
+production build includes only Node types and excludes test files.
+
+The Webpack override in package.json keeps the Nest CLI and its plugins on one
+compatible Webpack 5 version. Reassess this override when upgrading the CLI.
+
 ## Checks
 
 ```powershell
 npm.cmd run build
+npx.cmd --no-install tsc --noEmit --incremental false -p tsconfig.json
 npm.cmd run lint
 npm.cmd test -- --runInBand
 npm.cmd run test:e2e -- --runInBand
