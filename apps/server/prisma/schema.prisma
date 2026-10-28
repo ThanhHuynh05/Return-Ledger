@@ -1,0 +1,63 @@
+generator client {
+  provider     = "prisma-client"
+  output       = "../src/generated/prisma"
+  moduleFormat = "cjs"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  VIEWER
+  ANALYST
+  SUPERVISOR
+  ADMINISTRATOR
+}
+
+model Organization {
+  id          String       @id @default(uuid()) @db.Uuid
+  name        String
+  createdAt   DateTime     @default(now()) @map("created_at") @db.Timestamptz(6)
+  memberships Membership[]
+  orders      Order[]
+
+  @@map("organizations")
+}
+
+model User {
+  id              String       @id @default(uuid()) @db.Uuid
+  identityIssuer  String       @map("identity_issuer")
+  identitySubject String       @map("identity_subject")
+  displayName     String       @map("display_name")
+  memberships     Membership[]
+
+  @@unique([identityIssuer, identitySubject])
+  @@map("users")
+}
+
+model Membership {
+  organizationId String       @map("organization_id") @db.Uuid
+  userId         String       @map("user_id") @db.Uuid
+  role           Role
+  active         Boolean      @default(true)
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Restrict)
+  user           User         @relation(fields: [userId], references: [id], onDelete: Restrict)
+
+  @@id([organizationId, userId])
+  @@index([userId])
+  @@map("memberships")
+}
+
+model Order {
+  id             String       @id @default(uuid()) @db.Uuid
+  organizationId String       @map("organization_id") @db.Uuid
+  orderRef       String       @map("order_ref")
+  currency       String       @db.VarChar(3)
+  createdAt      DateTime     @default(now()) @map("created_at") @db.Timestamptz(6)
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Restrict)
+
+  @@unique([organizationId, orderRef])
+  @@unique([organizationId, id])
+  @@map("orders")
+}

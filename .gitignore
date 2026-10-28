@@ -88,5 +88,7 @@ Desktop.ini
 $RECYCLE.BIN/
 
 # Keep dependency lockfiles, Prisma schemas and migrations,
+/apps/server/src/generated/prisma/
+
 # source documents, and synthetic CSV/test fixtures under version control.
 
